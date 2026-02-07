@@ -46,15 +46,15 @@ Order Placed → Dispatched → In Transit → Out for Delivery → Delivered
 
 **4.The chatbot responds with:**
 ------
-->Current status
+• Current status
 
-->Location
+• Location
 
-->Expected delivery
+• Expected delivery
 
-->Visual progress tracker
+• Visual progress tracker
 
-->Same tracking ID always moves forward, never backward.
+• Same tracking ID always moves forward, never backward.
 
 --------
 
