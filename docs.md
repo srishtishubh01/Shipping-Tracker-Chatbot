@@ -13,81 +13,83 @@ The chatbot responds in a natural way, remembers tracking IDs, and updates shipm
 **2. Problem Statement**
 -------
 
-Most shipment tracking systems:
+**Most shipment tracking systems:**
 
-Are slow to load
+• Are slow to load.
 
-Have cluttered user interfaces
+• Have cluttered user interfaces.
 
-Require users to navigate multiple pages
+• Require users to navigate multiple pages.
 
-Feel robotic and non-interactive
+• Feel robotic and non-interactive.
 
-For students and small businesses, building such systems is complex and resource-heavy.
+• For students and small businesses, building such systems is complex and resource-heavy.
 
 ------
 
 **3. Solution Overview**
 -------
 
-Smart Shipment Chatbot solves this problem by:
+**Smart Shipment Chatbot solves this problem by:**
 
-Using a chat-style interface
+• Using a chat-style interface.
 
-Keeping the UI minimal and fast
+• Keeping the UI minimal and fast.
 
-Simulating shipment progress logically
+• Simulating shipment progress logically.
 
-Avoiding backend complexity while still behaving realistically
+• Avoiding backend complexity while still behaving realistically.
 
-The system works completely on the frontend using JavaScript, making it easy to deploy and understand.
+• The system works completely on the frontend using JavaScript, making it easy to deploy and understand.
 
 -------
 
 **4. Functional Flow**
+-------
 
-•User opens the application.
+• User opens the application.
 
-•User enters a tracking ID or asks a question like:
+• User enters a tracking ID or asks a question like:
 
-•“Where is my order?”
+• “Where is my order?”
 
-•“Track my package”
+• “Track my package”
 
 **The chatbot:**
 
-•Validates the tracking ID
+• Validates the tracking ID.
 
-•Saves it in memory
+• Saves it in memory.
 
-•Generates order and shipment details
+• Generates order and shipment details.
 
-•Shipment status is calculated dynamically.
+• Shipment status is calculated dynamically.
 
 **The chatbot replies with:**
 
-• Current shipment stage
+• Current shipment stage.
 
-• City/location
+• City/location.
 
-• Expected delivery (only if not delivered)
+• Expected delivery (only if not delivered).
 
-On future searches with the same ID, progress continues forward.
+• On future searches with the same ID, progress continues forward.
 
 ------
+
 **5. Shipment Lifecycle Logic**
 -------
 
 **The chatbot follows a realistic shipment flow:**
 
-Order Placed
+• Order Placed
 
-Dispatched
+• Dispatched
 
-In Transit
+• In Transit
 
-Out for Delivery
+• Out for Delivery
 
-Delivered
+• Delivered
 
 
