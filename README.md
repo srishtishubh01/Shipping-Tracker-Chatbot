@@ -83,3 +83,12 @@ Order Placed → Dispatched → In Transit → Out for Delivery → Delivered
 ------
 **zingy-cassata-395339.netlify.app**
 
+------
+
+## 📥 How to Clone This Repository
+
+
+**git clone https://github.com/srishtishubh01/Shipping-Tracker-Chatbot.git
+  cd Shipping-Tracker-Chatbot**
+
+
