@@ -46,33 +46,33 @@ The system works completely on the frontend using JavaScript, making it easy to 
 
 **4. Functional Flow**
 
-**->**User opens the application.
+•User opens the application.
 
-**->**User enters a tracking ID or asks a question like:
+•User enters a tracking ID or asks a question like:
 
-**->**“Where is my order?”
+•“Where is my order?”
 
-**->**“Track my package”
+•“Track my package”
 
 **The chatbot:**
 
-**->**Validates the tracking ID
+•Validates the tracking ID
 
-**->**Saves it in memory
+•Saves it in memory
 
-**->**Generates order and shipment details
+•Generates order and shipment details
 
-**->**Shipment status is calculated dynamically.
+•Shipment status is calculated dynamically.
 
 **The chatbot replies with:**
 
-Current shipment stage
+• Current shipment stage
 
-**->**City/location
+• City/location
 
-**->**Expected delivery (only if not delivered)
+• Expected delivery (only if not delivered)
 
-**->**On future searches with the same ID, progress continues forward.
+On future searches with the same ID, progress continues forward.
 
 ------
 **5. Shipment Lifecycle Logic**
