@@ -38,23 +38,23 @@ Order Placed → Dispatched → In Transit → Out for Delivery → Delivered
 **🧩 How It Works**
 ------
 
-1.User enters a tracking ID in the chat.
+**1.** User enters a tracking ID in the chat.
 
-2.The chatbot generates or retrieves order data.
+**2.** The chatbot generates or retrieves order data.
 
-3.Shipment status is calculated based on days passed since order date.
+**3.** Shipment status is calculated based on days passed since order date.
 
-4.The chatbot responds with:
+**4.The chatbot responds with:**
+------
+->Current status
 
-Current status
+->Location
 
-Location
+->Expected delivery
 
-Expected delivery
+->Visual progress tracker
 
-Visual progress tracker
-
-Same tracking ID always moves forward, never backward.
+->Same tracking ID always moves forward, never backward.
 
 --------
 
