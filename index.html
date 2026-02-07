@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Shipment Assistant</title>
+
+<style>
+body{
+  background:#f7f6f2; /* warm off-white */
+  font-family:Arial, sans-serif;
+}
+.chatbox{
+  width:420px;
+  margin:30px auto;
+  background:#ffffff;
+  border-radius:12px;
+  box-shadow:0 6px 16px rgba(0,0,0,0.12);
+  overflow:hidden;
+}
+.header{
+  background:#3f6f6b; /* muted teal */
+  color:#fff;
+  padding:14px;
+  text-align:center;
+  font-size:17px;
+  font-weight:bold;
+}
+.messages{
+  height:380px;
+  padding:12px;
+  overflow-y:auto;
+  background:#faf9f6;
+}
+.msg{
+  margin-bottom:12px;
+  max-width:90%;
+  padding:9px 12px;
+  border-radius:10px;
+  font-size:14px;
+}
+.user{
+  background:#3f6f6b;
+  color:#fff;
+  margin-left:auto;
+}
+.bot{
+  background:#efe9dd; /* soft beige */
+  color:#2e2e2e;
+}
+.input{
+  display:flex;
+  border-top:1px solid #d6d2c8;
+}
+.input input{
+  flex:1;
+  padding:10px;
+  border:none;
+  outline:none;
+  background:#fffdf9;
+}
+.input button{
+  background:#3f6f6b;
+  color:#fff;
+  border:none;
+  padding:0 16px;
+  cursor:pointer;
+}
+
+/* tracker */
+.tracker{ margin-top:12px; }
+.icons{
+  display:flex;
+  justify-content:space-between;
+  margin:8px 0;
+}
+.icon{
+  width:30px;
+  height:30px;
+  border-radius:50%;
+  background:#b8b6af; /* dusty grey */
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  color:#fff;
+  font-size:14px;
+}
+.icon.active{ background:#6b8e23; } /* olive green */
+
+.steps{
+  display:flex;
+  justify-content:space-between;
+  font-size:10px;
+  text-align:center;
+}
+.steps div{
+  width:20%;
+  color:#7a776f;
+}
+.steps div.active{
+  color:#3f6f6b;
+  font-weight:bold;
+}
+.date{
+  font-size:9px;
+  color:#8c887f;
+}
+</style>
+</head>
+
+<body>
+
+<div class="chatbox">
+  <div class="header">Shipment Assistant</div>
+
+  <div class="messages" id="chat">
+    <div class="msg bot">
+      Hi 👋 Enter your <b>Tracking ID</b> to check order status.
+    </div>
+  </div>
+
+  <div class="input">
+    <input id="input" placeholder="Type tracking ID or question...">
+    <button onclick="send()">Send</button>
+  </div>
+</div>
+
+<script>
+const cities=["Indore","Pune","Delhi","Mumbai","Jaipur","Bhopal"];
+const statuses=[
+  "Order Placed",
+  "Dispatched",
+  "In Transit",
+  "Out for Delivery",
+  "Delivered"
+];
+
+let orders={};
+let lastId=null;
+
+function send(){
+  const input=document.getElementById("input");
+  const text=input.value.trim();
+  if(text==="") return;
+
+  addMsg(text,"user");
+  input.value="";
+  setTimeout(()=>handle(text.toLowerCase()),400);
+}
+
+document.getElementById("input").addEventListener("keydown",e=>{
+  if(e.key==="Enter") send();
+});
+
+function handle(text){
+  if(text.includes("where is my order") || text.includes("order status")){
+    if(lastId) showOrder(lastId);
+    else addMsg("Please enter Tracking ID first.","bot");
+    return;
+  }
+  showOrder(text);
+}
+
+function formatStepDate(date){
+  return date.toLocaleDateString("en-GB",{
+    weekday:"short",
+    day:"2-digit",
+    month:"short"
+  });
+}
+
+function showOrder(id){
+  if(!orders[id]){
+    const pastDays=Math.floor(Math.random()*9)+1;
+    const orderDate=new Date();
+    orderDate.setDate(orderDate.getDate()-pastDays);
+
+    orders[id]={
+      orderDate,
+      city:cities[Math.floor(Math.random()*cities.length)],
+      weight:(Math.random()*3+1).toFixed(1),
+      delivery:new Date(orderDate.getTime()+8*86400000)
+    };
+
+    addMsg("Order details fetched successfully.","bot");
+  }
+
+  lastId=id;
+  const o=orders[id];
+  const today=new Date();
+  const days=Math.floor((today-o.orderDate)/(1000*60*60*24));
+
+  let statusIndex=0;
+  if(days>=2) statusIndex=1;
+  if(days>=4) statusIndex=2;
+  if(days>=6) statusIndex=3;
+  if(days>=8) statusIndex=4;
+
+  function stepDate(d){
+    return formatStepDate(
+      new Date(o.orderDate.getTime()+d*86400000)
+    );
+  }
+
+  addMsg(`
+<b>Tracking ID:</b> ${id}<br>
+<b>Status:</b> ${statuses[statusIndex]}<br>
+<b>Location:</b> ${o.city}, India<br>
+<b>Expected Delivery:</b> ${o.delivery.toDateString()}<br>
+<b>Weight:</b> ${o.weight} kg<br>
+<b>Carrier:</b> ExpressShip
+
+<div class="tracker">
+  <div class="icons">
+    <div class="icon ${statusIndex>=0?"active":""}">✔</div>
+    <div class="icon ${statusIndex>=1?"active":""}">📦</div>
+    <div class="icon ${statusIndex>=2?"active":""}">🚚</div>
+    <div class="icon ${statusIndex>=3?"active":""}">🚐</div>
+    <div class="icon ${statusIndex>=4?"active":""}">🏁</div>
+  </div>
+
+  <div class="steps">
+    <div class="${statusIndex>=0?"active":""}">
+      Placed<br><span class="date">${stepDate(0)}</span>
+    </div>
+    <div class="${statusIndex>=1?"active":""}">
+      Dispatched<br><span class="date">${stepDate(2)}</span>
+    </div>
+    <div class="${statusIndex>=2?"active":""}">
+      Transit<br><span class="date">${stepDate(4)}</span>
+    </div>
+    <div class="${statusIndex>=3?"active":""}">
+      Out for Delivery<br><span class="date">${stepDate(6)}</span>
+    </div>
+    <div class="${statusIndex>=4?"active":""}">
+      Delivered<br>
+      <span class="date">${statusIndex>=4 ? stepDate(8) : ""}</span>
+    </div>
+  </div>
+</div>
+`,"bot");
+}
+
+function addMsg(text,type){
+  const div=document.createElement("div");
+  div.className="msg "+type;
+  div.innerHTML=text;
+  document.getElementById("chat").appendChild(div);
+  document.getElementById("chat").scrollTop=9999;
+}
+</script>
+
+</body>
+</html>
